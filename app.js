@@ -1,10 +1,13 @@
 const { app, BrowserWindow, Menu } = require('electron');
 const path = require('path');
 const url = require('url');
+const ipc = require('electron').ipcMain;
+
+let win;
 
 function createWindow () {
   // Create the browser window.
-  const win = new BrowserWindow({
+  win = new BrowserWindow({
     width: 900,
     height: 600,
     minHeight: 600,
@@ -47,3 +50,7 @@ app.on('activate', () => {
     createWindow()
   }
 })
+
+ipc.on('update-selector', function (event, arg) {
+  win.webContents.send('new-selector' , arg);
+});

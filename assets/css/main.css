@@ -43,3 +43,7 @@ body {
     height: 100%;
     resize: none;
 }
+
+.dropdown-menu>.dropdown-item {
+    cursor: pointer;
+}

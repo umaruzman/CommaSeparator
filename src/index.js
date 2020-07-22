@@ -1,3 +1,9 @@
+const electron = require('electron');
+const path = require('path');
+const { remote } = require('electron');
+const BrowserWindow = electron.remote.BrowserWindow;
+const ipc = require('electron').ipcRenderer;
+
 // Function Start Runs after the window completes loading...
 
 function start () {
@@ -55,6 +61,10 @@ function start () {
 
     ddSpace.addEventListener('click', function () {
         btnSeparatorType.innerHTML = "Space";
+    });
+
+    ddCustom.addEventListener('click', function () {
+        openCustomWindow();
     });
 
     
@@ -157,6 +167,29 @@ function separateSingleLine (separator) {
 }
 
 
+// Function to open Custom Window
+
+function openCustomWindow () {
+    const modalPath = path.join('file://', __dirname, 'custom.html');
+    let win = new BrowserWindow({
+        frame: false,
+        transparent: true,
+        alwaysOnTop: true,
+        resizable:false,
+        width: 300,
+        height: 200,
+        webPreferences: {
+            nodeIntegration: true
+        }
+    });
+    win.on('close', function () {win = null});
+    win.loadURL(modalPath);
+    win.show();
+
+    //win.webContents.openDevTools()
+
+}
+
 // This calls the Start Function after loading the window..
 
 var body = document.getElementsByTagName('body')[0];
@@ -165,3 +198,7 @@ body.onload = function () {
     start();
 };
 
+ipc.on ('new-selector', function(event,arg){
+    var newSelector = String(arg);
+    btnSeparatorType.innerHTML = newSelector.toLocaleString('en');
+});
