@@ -1,4 +1,4 @@
-# Comma Separator APP
+# Comma Separator Desktop Application
 
 * This is a Desktop application, built using ElectronJS
 * This Application helps to add commas, semi-colon, colon, slash, hyphen, space or other custom input for multiline text. For Example: this can be used to add commas between multiple Phone Number.
